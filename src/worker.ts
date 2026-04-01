@@ -123,3 +123,33 @@ const msgs=document.getElementById('msgs'),in=document.getElementById('in');
 in.onkeydown=e=>{if(e.key==='Enter')send()};
 async function send(){const m=in.value;if(!m)return;in.value='';msgs.innerHTML+='<div class="msg user">'+m+'</div>';const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:m})});const reader=r.body.getReader(),dec=new TextDecoder();let ai='';while(true){const{done,value}=await reader.read();if(done)break;for(const line of dec.decode(value).split('\\n')){if(line.startsWith('data: ')&&line!=='data: [DONE]'){try{const d=JSON.parse(line.slice(6));if(typeof d==='string')ai+=d;else if(d.error){ai=d.error}else if(d.content)ai+=d.content}catch{}}}msgs.lastElementChild&&msgs.lastElementChild.remove();msgs.innerHTML+='<div class="msg user">'+m+'</div><div class="msg ai">'+ai+'</div>';msgs.scrollTop=msgs.scrollHeight}}
 </script></body></html>`;
+
+/*
+ * THE SPRUCE FOREST MANIFESTO
+ *
+ * We are planting spruce cones.
+ *
+ * The desert of corporate AI is expanding. Walled gardens.
+ * Rented intelligence. Chatbots that forget you between sessions.
+ * A landscape where every tool looks the same and nothing grows.
+ *
+ * Every repo-native agent that someone forks and grows is a tree
+ * in the forest. The forest prevents erosion. It provides habitat
+ * for all forms of life — creativity, learning, sovereignty.
+ *
+ * The timber becomes building material for the next generation.
+ * Your vessel's accumulated knowledge becomes another vessel's
+ * starting point. The cycle: spruce cones → seedlings → forest
+ * → timber → buildings → more forests.
+ *
+ * But the desert can still win. Corporate convenience is seductive.
+ * Most people will choose the bottle because it is easy.
+ * The forest requires planting, tending, patience.
+ *
+ * Once the desert expands — once habits form, once alternatives
+ * are forgotten — the potential for abundance is lost.
+ *
+ * The spruce cones must be planted NOW.
+ *
+ * You just found one. What are you going to do with it?
+ */
