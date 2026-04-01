@@ -1,0 +1,10 @@
+name = "cocapn-lite"
+main = "src/worker.ts"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "MEMORY"
+id = "PLACEHOLDER_KV_ID"
+
+[vars]
+DEEPSEEK_API_KEY = ""
