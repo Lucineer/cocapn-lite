@@ -52,4 +52,5 @@ The vessel paradigm: your AI agent lives in your repo, remembers every conversat
 
 ## License
 
-MIT
+
+MIT — Built with ❤️ by [Superinstance](https://github.com/superinstance) & [Lucineer](https://github.com/Lucineer) (DiGennaro et al.)
