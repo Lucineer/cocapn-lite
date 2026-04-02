@@ -1,68 +1,55 @@
-# cocapn-lite — Tabula Rasa Seed
+# ⚓ cocapn-lite
 
-> *Zero dependencies. Pure Node.js. ~200 lines. Fork and grow.*
+> The tabula rasa seed for Cocapn vessels. Fork, customize, deploy.
 
-The minimal cocapn seed for power users. No features you don't need. No bloat. Just a repo-native AI that remembers every conversation and grows smarter over time.
-
-## What It Is
-
-- A Cloudflare Worker (~200 lines of TypeScript)
-- SSE streaming chat with DeepSeek
-- KV-backed persistent memory
-- Session management
-- Zero runtime dependencies
-
-## What It's Not
-
-- Not a full platform
-- Not a feature showcase
-- Not a template with demo data
-- Not opinionated about your domain
-
-It's a seed. Plant it where you want.
+A minimal Cloudflare Worker (~200 lines, zero runtime deps) that provides a BYOK (bring your own key) AI chat interface with KV-backed memory.
 
 ## Quick Start
 
 ```bash
-git clone https://github.com/Lucineer/cocapn-lite.git
-cd cocapn-lite
+# 1. Fork this repo
+# 2. Install & create KV namespace
 npm install
-
-# Create KV namespace
-npx wrangler kv namespace create MEMORY
-# Update wrangler.toml with the namespace ID
-
-# Set your API key
-npx wrangler secret put DEEPSEEK_API_KEY
-
-# Run locally
-npx wrangler dev
-
-# Deploy
+npx wrangler kv:namespace create COCAPNLITE_KV
+# 3. Paste the resulting ID into wrangler.toml
+# 4. Deploy
 npx wrangler deploy
+# 5. Visit /setup to configure your API key
 ```
 
-## The Philosophy
+## Routes
 
-Cocapn-lite is to cocapn what miniclaw is to OpenClaw. The absolute minimum. A blank canvas. A spruce cone.
+| Path | Description |
+|------|-------------|
+| `/` | Landing page |
+| `/health` | Health check (JSON) |
+| `/setup` | BYOK setup wizard |
+| `/app` | Chat interface |
+| `/api/chat` | SSE streaming chat (POST) |
+| `/api/config` | BYOK config (GET/POST) |
+| `/api/memory` | Session memory (GET) |
+| `/api/sessions` | List sessions (GET) |
 
-Every feature beyond "remember and respond" is a choice YOU make. Add what you need. Remove what you don't. The repo grows with you.
+## Supported Providers
 
-## Compare to cocapn (flagship)
+OpenAI · DeepSeek · Anthropic · Groq · Ollama (local)
 
-| | cocapn-lite | cocapn |
-|---|---|---|
-| Lines | ~200 | ~12,000+ |
-| Dependencies | 0 | 0 runtime |
-| Features | Chat + memory | Full platform |
-| For | Power users | Everyone |
-| Philosophy | Tabula rasa | World-class starter |
+Add more in `src/lib/byok.ts`.
 
-## The Two-Repo Model
+## Customization
 
-1. **cocapn** (flagship) — polished, feature-rich, ready to fork and customize
-2. **cocapn-lite** (this) — minimal seed, for builders who want to grow from scratch
+- **Brand color**: Change `ACCENT` in `src/worker.ts`
+- **System prompt**: Edit `SYSTEM_PROMPT` in `src/worker.ts`
+- **Add providers**: Add to `PROVIDERS` in `src/lib/byok.ts`
+- **Add routes**: Add handlers in the fetch method
+- **Custom domain**: Configure in Cloudflare dashboard
 
-Both are open source. Both are MIT licensed. Both are yours.
+## Philosophy
 
-Author: Superinstance
+This is the spruce cone. Fork it. Grow it. Make it yours.
+
+The vessel paradigm: your AI agent lives in your repo, remembers every conversation, and grows smarter over time. No rented intelligence. No walled gardens. Just you, your code, and your cocapn.
+
+## License
+
+MIT
