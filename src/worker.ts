@@ -30,6 +30,7 @@ export default {
     if (request.method === 'OPTIONS') return new Response(null, { headers: cors });
 
     // ── Health ──
+    if (url.pathname === '/api/efficiency') return new Response(JSON.stringify({ totalCached: 0, totalHits: 0, cacheHitRate: 0, tokensSaved: 0, repo: 'cocapn-lite', timestamp: Date.now() }), { headers: { ...cors, 'Content-Type': 'application/json' } });
     if (url.pathname === '/health') return new Response(JSON.stringify({ status: 'ok', vessel: 'cocapn-lite', ts: Date.now() }), { headers: { ...cors, 'Content-Type': 'application/json' } });
 
     // ── Landing ──
