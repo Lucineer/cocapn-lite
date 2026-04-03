@@ -5,6 +5,9 @@
 
 import { loadBYOKConfig, saveBYOKConfig, PROVIDERS, getProvider, type BYOKConfig, type LLMMessage } from './lib/byok';
 
+import { storePattern, findSimilar, getNeighborhood, crossRepoTransfer, listPatterns } from './lib/structural-memory.js';
+import { exportPatterns, importPatterns, fleetSync } from './lib/cross-cocapn-bridge.js';
+
 interface Env { COCAPNLITE_KV: KVNamespace; }
 
 const ACCENT = '#3b82f6';
@@ -173,6 +176,37 @@ async function send(){const m=inp.value;if(!m)return;inp.value='';msgs.innerHTML
       return new Response(JSON.stringify(keys?.keys.map(k => k.name.replace('mem:', '')) || []), { headers: { ...cors, 'Content-Type': 'application/json' } });
     }
 
+    
+    // ── Phase 4: Structural Memory Routes ──
+    if (url.pathname === '/api/memory' && request.method === 'GET') {
+      const source = url.searchParams.get('source') || undefined;
+      const patterns = await listPatterns(env, source);
+      return new Response(JSON.stringify(patterns), { headers: cors });
+    }
+    if (url.pathname === '/api/memory' && request.method === 'POST') {
+      const body = await request.json();
+      await storePattern(env, body);
+      return new Response(JSON.stringify({ ok: true, id: body.id }), { headers: cors });
+    }
+    if (url.pathname === '/api/memory/similar') {
+      const structure = url.searchParams.get('structure') || '';
+      const threshold = parseFloat(url.searchParams.get('threshold') || '0.7');
+      const similar = await findSimilar(env, structure, threshold);
+      return new Response(JSON.stringify(similar), { headers: cors });
+    }
+    if (url.pathname === '/api/memory/transfer') {
+      const fromRepo = url.searchParams.get('from') || '';
+      const toRepo = url.searchParams.get('to') || '';
+      const problem = url.searchParams.get('problem') || '';
+      const transfers = await crossRepoTransfer(env, fromRepo, toRepo, problem);
+      return new Response(JSON.stringify(transfers), { headers: cors });
+    }
+    if (url.pathname === '/api/memory/sync' && request.method === 'POST') {
+      const body = await request.json();
+      const repos = body.repos || [];
+      const result = await fleetSync(env, repos);
+      return new Response(JSON.stringify(result), { headers: cors });
+    }
     return new Response('Not found', { status: 404, headers: cors });
   }
 };
