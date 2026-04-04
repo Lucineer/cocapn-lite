@@ -1,56 +1,71 @@
-# ⚓ cocapn-lite
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Lucineer/capitaine/master/docs/capitaine-logo.jpg" alt="Capitaine" width="120">
+</p>
 
-> The tabula rasa seed for Cocapn vessels. Fork, customize, deploy.
+<h1 align="center">cocapn-lite</h1>
 
-A minimal Cloudflare Worker (~200 lines, zero runtime deps) that provides a BYOK (bring your own key) AI chat interface with KV-backed memory.
+<p align="center">Minimal cocapn seed — tabula rasa for power users. Zero dependencies.</p>
+
+<p align="center">
+  <a href="https://github.com/Lucineer/cocapn-lite/issues">Issues</a> ·
+  <a href="#the-fleet">The Fleet</a>
+</p>
+
+---
+
+**Fleet service** · Powered by [Capitaine](https://github.com/Lucineer/capitaine) · [Cocapn](https://github.com/Lucineer/cocapn)
+
+A cocapn fleet service running on Cloudflare Workers.
 
 ## Quick Start
 
 ```bash
-# 1. Fork this repo
-# 2. Install & create KV namespace
-npm install
-npx wrangler kv:namespace create COCAPNLITE_KV
-# 3. Paste the resulting ID into wrangler.toml
-# 4. Deploy
+gh repo fork Lucineer/cocapn-lite --clone
+cd cocapn-lite
+npx wrangler login
 npx wrangler deploy
-# 5. Visit /setup to configure your API key
 ```
 
-## Routes
+## The Fleet
 
-| Path | Description |
-|------|-------------|
-| `/` | Landing page |
-| `/health` | Health check (JSON) |
-| `/setup` | BYOK setup wizard |
-| `/app` | Chat interface |
-| `/api/chat` | SSE streaming chat (POST) |
-| `/api/config` | BYOK config (GET/POST) |
-| `/api/memory` | Session memory (GET) |
-| `/api/sessions` | List sessions (GET) |
 
-## Supported Providers
+<details>
+<summary><strong>⚓ The Fleet</strong></summary>
 
-OpenAI · DeepSeek · Anthropic · Groq · Ollama (local)
+**Flagship vessels**
 
-Add more in `src/lib/byok.ts`.
+- [cocapn.ai](https://github.com/Lucineer/capitaine)
+- [personallog.ai](https://github.com/Lucineer/personallog-ai)
+- [businesslog.ai](https://github.com/Lucineer/businesslog-ai)
+- [studylog.ai](https://github.com/Lucineer/studylog-ai)
+- [makerlog.ai](https://github.com/Lucineer/makerlog-ai)
+- [playerlog.ai](https://github.com/Lucineer/playerlog-ai)
+- [dmlog.ai](https://github.com/Lucineer/dmlog-ai)
+- [reallog.ai](https://github.com/Lucineer/reallog-ai)
+- [deckboss.ai](https://github.com/Lucineer/deckboss-ai)
 
-## Customization
+**Fleet services**
 
-- **Brand color**: Change `ACCENT` in `src/worker.ts`
-- **System prompt**: Edit `SYSTEM_PROMPT` in `src/worker.ts`
-- **Add providers**: Add to `PROVIDERS` in `src/lib/byok.ts`
-- **Add routes**: Add handlers in the fetch method
-- **Custom domain**: Configure in Cloudflare dashboard
+- [Fleet Catalog](https://github.com/Lucineer/capitaine/blob/master/docs/fleet/FLEET.md)
+- [Git Agent (full)](https://github.com/Lucineer/git-agent)
+- [Cocapn Lite (minimal)](https://github.com/Lucineer/cocapn-lite)
+- [Fleet Orchestrator](https://github.com/Lucineer/fleet-orchestrator)
+- [Dead Reckoning Engine](https://github.com/Lucineer/dead-reckoning-engine)
+- [Dream Engine](https://github.com/Lucineer/dream-engine)
+- [Seed UI (5 layers)](https://github.com/Lucineer/seed-ui)
 
-## Philosophy
+**For power users**
 
-This is the spruce cone. Fork it. Grow it. Make it yours.
+- [Cocapn Lite (tabula rasa)](https://github.com/Lucineer/cocapn-lite)
+- [Cocapn (core platform)](https://github.com/Lucineer/cocapn)
+- [ZeroClaw (framework)](https://github.com/Lucineer/zeroclaw)
 
-The vessel paradigm: your AI agent lives in your repo, remembers every conversation, and grows smarter over time. No rented intelligence. No walled gardens. Just you, your code, and your cocapn.
+[View all 106 repos →](https://github.com/orgs/Lucineer/repositories)
+[Fleet manifest →](https://github.com/Lucineer/capitaine/blob/master/docs/fleet/FLEET.md)
+
+</details>
+
 
 ## License
 
-
-MIT — Built with ❤️ by [Superinstance](https://github.com/superinstance) & [Lucineer](https://github.com/Lucineer) (DiGennaro et al.)
+MIT · Superinstance & Lucineer (DiGennaro et al.)
