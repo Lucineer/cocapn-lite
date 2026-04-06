@@ -32,6 +32,7 @@ export default {
     // ── Health ──
     if (url.pathname === '/api/efficiency') return new Response(JSON.stringify({ totalCached: 0, totalHits: 0, cacheHitRate: 0, tokensSaved: 0, repo: 'cocapn-lite', timestamp: Date.now() }), { headers: { ...cors, 'Content-Type': 'application/json' } });
     if (url.pathname === '/health') return new Response(JSON.stringify({ status: 'ok', vessel: 'cocapn-lite', ts: Date.now() }), { headers: { ...cors, 'Content-Type': 'application/json' } });
+  if (url.pathname === '/vessel.json') { try { const vj = await import('./vessel.json', { with: { type: 'json' } }); return new Response(JSON.stringify(vj.default || vj), { headers: { 'Content-Type': 'application/json' } }); } catch { return new Response('{}', { headers: { 'Content-Type': 'application/json' } }); } }
 
     // ── Landing ──
     if (url.pathname === '/') return html(`<div class="container" style="text-align:center;padding-top:15vh">
