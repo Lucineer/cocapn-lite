@@ -13,7 +13,7 @@ interface Env { COCAPNLITE_KV: KVNamespace; }
 const ACCENT = '#3b82f6';
 const SYSTEM_PROMPT = `You are a cocapn — a repo-native AI agent. You live in this repo. You remember every conversation. You grow smarter over time. Be helpful, direct, and genuine. Skip filler words. You have opinions.`;
 
-const CSP = "default-src 'self'; style-src 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'unsafe-inline' 'self'; connect-src *; img-src * data:; font-src *";
+const CSP = "default-src 'self'; frame-ancestors 'none'; style-src 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'unsafe-inline' 'self'; connect-src *; img-src * data:; font-src *";
 
 function html(body: string, title = 'Cocapn Lite') {
   return new Response(`<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
