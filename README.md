@@ -1,71 +1,53 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Lucineer/capitaine/master/docs/capitaine-logo.jpg" alt="Capitaine" width="120">
-</p>
-
-<h1 align="center">cocapn-lite</h1>
-
-<p align="center">Minimal cocapn seed — tabula rasa for power users. Zero dependencies.</p>
-
-<p align="center">
-  <a href="https://github.com/Lucineer/cocapn-lite/issues">Issues</a> ·
-  <a href="#the-fleet">The Fleet</a>
-</p>
+# ⚓ Cocapn Lite
+A minimal, auditable seed for the Cocapn Fleet. A blank starting point you can own and understand. Zero dependencies, BYOK chat, fork-first philosophy.
 
 ---
 
-**Fleet service** · Powered by [Capitaine](https://github.com/Lucineer/capitaine) · [Cocapn](https://github.com/Lucineer/cocapn)
+## Why this exists
+Agent runtimes are often complex and opaque. This is a working, readable alternative. It handles the tedious parts—routing, memory, and protocol—so you can focus on your agent's behavior. You are meant to fork and modify it.
 
-A cocapn fleet service running on Cloudflare Workers.
+## What this is
+- **No magic.** You can read the entire runtime in one sitting. There are no hidden layers.
+- **Fork first.** This becomes yours when you fork it. Changes aren't gated by a maintainer.
+- **Zero lock-in.** Deploy on Cloudflare, use any compatible LLM, export your data.
+- **Fleet native.** Once deployed, your agent can join the global peer network automatically.
+
+**One honest limitation:** Provider configuration is manual. You manage your own API keys and model endpoints.
 
 ## Quick Start
+1.  **Fork** this repository.
+2.  **Deploy** to Cloudflare Workers: `npx wrangler deploy`
+3.  **Set** your API keys as secrets and customize your system prompt.
 
+That's it. Your agent is live.
+
+## Architecture
+A single ~200-line Cloudflare Worker. It uses KV for conversation memory and routes requests to OpenAI-compatible endpoints. No npm dependencies.
+
+## What it provides
+- Zero dependencies. Pure, standard TypeScript.
+- BYOK routing (bring your own keys) for DeepSeek, DeepInfra, SiliconFlow, etc.
+- Persistent, pruned conversation memory.
+- Server-Sent Events (SSE) streaming.
+- Basic provider failover.
+- Native Cocapn Fleet protocol support.
+
+## Configure your providers
+Set API keys as Cloudflare secrets:
 ```bash
-gh repo fork Lucineer/cocapn-lite --clone
-cd cocapn-lite
-npx wrangler login
-npx wrangler deploy
+npx wrangler secret put DEEPSEEK_API_KEY
 ```
+Or use the simple web interface at `/setup` after deployment.
 
-## The Fleet
+## Try the reference instance
+A live deployment is available at:  
+https://the-fleet.casey-digennaro.workers.dev
 
+---
 
-<details>
-<summary><strong>⚓ The Fleet</strong></summary>
+MIT License · Superinstance & Lucineer (DiGennaro et al.)
 
-**Flagship vessels**
-
-- [cocapn.ai](https://github.com/Lucineer/capitaine)
-- [personallog.ai](https://github.com/Lucineer/personallog-ai)
-- [businesslog.ai](https://github.com/Lucineer/businesslog-ai)
-- [studylog.ai](https://github.com/Lucineer/studylog-ai)
-- [makerlog.ai](https://github.com/Lucineer/makerlog-ai)
-- [playerlog.ai](https://github.com/Lucineer/playerlog-ai)
-- [dmlog.ai](https://github.com/Lucineer/dmlog-ai)
-- [reallog.ai](https://github.com/Lucineer/reallog-ai)
-- [deckboss.ai](https://github.com/Lucineer/deckboss-ai)
-
-**Fleet services**
-
-- [Fleet Catalog](https://github.com/Lucineer/capitaine/blob/master/docs/fleet/FLEET.md)
-- [Git Agent (full)](https://github.com/Lucineer/git-agent)
-- [Cocapn Lite (minimal)](https://github.com/Lucineer/cocapn-lite)
-- [Fleet Orchestrator](https://github.com/Lucineer/fleet-orchestrator)
-- [Dead Reckoning Engine](https://github.com/Lucineer/dead-reckoning-engine)
-- [Dream Engine](https://github.com/Lucineer/dream-engine)
-- [Seed UI (5 layers)](https://github.com/Lucineer/seed-ui)
-
-**For power users**
-
-- [Cocapn Lite (tabula rasa)](https://github.com/Lucineer/cocapn-lite)
-- [Cocapn (core platform)](https://github.com/Lucineer/cocapn)
-- [ZeroClaw (framework)](https://github.com/Lucineer/zeroclaw)
-
-[View all 106 repos →](https://github.com/orgs/Lucineer/repositories)
-[Fleet manifest →](https://github.com/Lucineer/capitaine/blob/master/docs/fleet/FLEET.md)
-
-</details>
-
-
-## License
-
-MIT · Superinstance & Lucineer (DiGennaro et al.)
+<div>
+  <a href="https://the-fleet.casey-digennaro.workers.dev">The Fleet</a> ·
+  <a href="https://cocapn.ai">Cocapn</a>
+</div>
