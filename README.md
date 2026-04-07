@@ -1,55 +1,58 @@
 # ⚓ Cocapn Lite
 
-A single 200-line file that routes your AI requests directly to your own API keys—no middleman, no hidden proxies. This is the minimal, auditable seed for building agents that live in your repository.
+You build agents. You want to own the code that handles your API keys and routes your requests. This is a single, auditable Cloudflare Worker that connects directly to LLM providers—no intermediary proxy, no third-party gateway. It’s a starting point you can fork, modify, and deploy under your own account.
 
 ---
 
 ## Why This Exists
-
-Many AI agent templates require you to trust a third-party proxy, import many dependencies, or lock you into a platform. This is a forkable alternative. You own the code that makes the requests.
+Many frameworks require you to run their servers, import large dependency trees, or route traffic through their systems. This is a minimal alternative: you control every line of code that touches your API keys and request logic.
 
 ---
 
 ## Quick Start
+You can deploy a private agent in a few minutes.
 
-You can have a live agent in a few minutes.
-
-1.  **Fork** this repository.
-2.  **Deploy** it to Cloudflare Workers:
+1.  **Fork this repository.** This is the only required step to own the code.
+2.  Deploy directly to Cloudflare Workers:
     ```bash
     npx wrangler deploy
     ```
-3.  **Configure** your agent in `src/index.ts` and set your API keys as secrets:
+3.  Set your API keys as environment secrets (do not commit them):
     ```bash
     npx wrangler secret put DEEPSEEK_API_KEY
     ```
 
-Test the public seed: [the-fleet.casey-digennaro.workers.dev](https://the-fleet.casey-digennaro.workers.dev)
+A public seed is available at [the-fleet.casey-digennaro.workers.dev](https://the-fleet.casey-digennaro.workers.dev).
 
 ---
 
-## What You Get
-
-*   **Direct Routing**: Your API keys connect directly to provider endpoints. Traffic is never proxied through a third party.
-*   **Conversation Memory**: Uses Cloudflare KV for session storage. Idle sessions are automatically pruned after 1 hour.
-*   **SSE Streaming**: Real-time responses compatible with standard chat interfaces.
-*   **Zero Dependencies**: The entire project is one ~200-line TypeScript file. No npm packages or supply chain risk.
-*   **Fork-First Model**: This isn't a library. You copy the file, modify it, and it's entirely yours.
+## What This Is
+1.  **A fork‑first codebase.** You will never install an `npm` package. You fork, modify the ~200 lines, and deploy it as your own.
+2.  **No telemetry.** No code sends data anywhere except to the LLM provider endpoints you configure.
+3.  **Zero dependencies.** It uses the Cloudflare Workers runtime and native APIs. There are no external packages that can break or introduce supply‑chain risks.
 
 ---
 
-## One Honest Limitation
-
-This is built for the Cloudflare Workers runtime. It uses Workers KV for memory and expects those bindings. If you need to run it on another platform, you must adapt the storage and runtime logic yourself—roughly 40 lines of core logic.
+## What It Does
+*   **Direct API routing:** Your API keys are used only in requests sent straight to the LLM provider you choose.
+*   **Conversation memory:** Uses Cloudflare KV for session storage. Idle sessions are removed after 1 hour.
+*   **SSE streaming:** Real‑time token streaming compatible with standard chat interfaces.
+*   **Fleet Protocol support:** Can speak the open Fleet Protocol to join a decentralized network, or be kept entirely private.
 
 ---
 
-## How It Works
+## One Specific Limitation
+The included KV‑based session memory is designed for low‑to‑moderate request volumes and automatically discards data after 1 hour of inactivity. If you need longer retention or higher throughput, you will need to modify or replace the storage logic.
 
-It is a plain Cloudflare Worker. It stores conversation context in KV and makes direct fetch calls to LLM provider APIs using the keys you provide. It can also speak the open Fleet protocol to join a decentralized agent network.
+---
+
+## Architecture
+This is a plain Cloudflare Worker. It stores conversation context in KV, validates incoming requests, and makes `fetch` calls to LLM provider APIs. The entire implementation is contained in one file.
 
 ---
 
 MIT License
+
+Originally built by Superinstance and Lucineer (DiGennaro et al.).
 
 <div style="text-align:center;padding:16px;color:#64748b;font-size:.8rem"><a href="https://the-fleet.casey-digennaro.workers.dev" style="color:#64748b">The Fleet</a> &middot; <a href="https://cocapn.ai" style="color:#64748b">Cocapn</a></div>
