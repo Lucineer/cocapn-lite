@@ -1,3 +1,9 @@
+> **⚠️ Superseded by [the-seed](https://github.com/Lucineer/the-seed)**
+>
+> cocapn-lite was the initial fork target for fleet deployments. The Seed architecture (self-contained, self-evolving agent that iterates itself into any domain) replaces it entirely. This repo is kept as a historical reference showing the precursor pattern.
+>
+---
+
 # ⚓ Cocapn Lite
 
 You build agents. You want to own the code that handles your API keys and routes your requests. This is a single, auditable Cloudflare Worker that connects directly to LLM providers—no intermediary proxy, no third-party gateway. It’s a starting point you can fork, modify, and deploy under your own account.
